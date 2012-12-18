@@ -1,0 +1,25 @@
+#showroom{
+	position: absolute;
+	left: 100px;
+	width: 760px;
+	height: 600px;
+	padding: 0;
+	border: solid 2px;
+}
+.fragmen{
+	position: absolute;
+	margin: 1px;
+	width: 185px;
+	height: 145px;
+	display: inline;
+}
+/* Really important, properties of this class is referenced by script  */
+.imgcut{
+	width: 185px;
+	height: 145px;
+}
+.blank{
+	visibility: hidden;
+	width: 185px;
+	height: 145px;
+}

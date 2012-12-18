@@ -1,0 +1,108 @@
+<html>
+<head>
+	<title>Demo ShowRoow.js</title>
+	<link rel="stylesheet" type="text/css" href="showroom.css" />
+	<script type="text/javascript" src="ContainerID.js"></script>
+	<script type="text/javascript" src="ShowRoom.js"></script>
+	<script type="text/javascript" src="PositionManager.js"></script>
+	<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+	
+	<script type="text/javascript">
+		// global variable
+		var showRoom;
+		var posManager;
+		var COMPWIDTH;
+		var COMPHEIGHT;
+		var EmptyElmtID;
+		var numberOfColumn;
+		var numberOfRow;
+		var runFlag = false;
+		
+		function mulai(){
+			COMPWIDTH = 185;
+			COMPHEIGHT = 145;
+			
+			EmptyElmtID = "objek11";
+			numberOfColumn = numberOfRow = 4;
+			
+			showRoom = new ShowRoom("showroom");
+			posManager = new PositionManager(showRoom.getContainerID(), EmptyElmtID, numberOfColumn, numberOfRow);
+			showRoom.setEmptyElement(EmptyElmtID);
+			var objek = new Array();
+			var x = y = 0;
+			
+			// arrange object in the showroom div
+			for (var i=1; i<=16; i++){
+				var elmtID = "objek" + i,
+					elmt = getElmt("objek" + i),
+					posX, posY;
+					
+				objek.push("objek" + i);
+				elmt.addEventListener("click", function(evt){
+					if (!runFlag){
+						runFlag = true;
+						var isMove = false,
+							targetID = evt.currentTarget.id,
+							position = new Array();
+						evt.preventDefault();
+						isMove = posManager.tryMove(evt.currentTarget);
+						if (isMove){
+							position[0] = $("#" + posManager.emptyID).css('left');
+							position[1] = $("#" + posManager.emptyID).css('top');
+							position[2] = $("#" + targetID).css('left');
+							position[3] = $("#" + targetID).css('top');
+
+							$("#" + posManager.emptyID).css('left', position[2]);
+							$("#" + posManager.emptyID).css('top', position[3]);
+							$("#" + targetID).animate({left: position[0], top: position[1]}, 300, function(){
+								runFlag = false;
+							});
+						}
+					}
+				}, false);
+				$("#" + elmtID).dblclick(function(evt){
+					runFlag = false;
+				});
+				
+				posX = x * (COMPWIDTH + 5);
+				posY = y * (COMPHEIGHT + 5);
+
+				$("#" + elmtID).css('left', posX + "px");
+				$("#" + elmtID).css('top', posY + "px");
+				x++;
+				if (x == 4){
+					y++;
+					x = 0;
+				}
+			}
+			showRoom.putAllElement(objek);
+		}
+		$(function(){
+			mulai();
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<h1>Just ignore this</h1>
+		<div id="showroom">
+		</div>
+	</div>
+	<div id="objek1" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek2" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek3" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek4" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek5" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek6" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek7" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek8" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek9" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek10" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek11" class="fragmen imgcut"></div>
+	<div id="objek12" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek13" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek14" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek15" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+	<div id="objek16" class="fragmen"><img src="tiketpesanan.png" class="imgcut"/></div>
+</body>
+</html>
